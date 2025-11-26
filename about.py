@@ -36,6 +36,3 @@ The application includes pre-trained models for:
 
 For more information, check the README.md file in the project root.
 """)
-
-st.markdown("---")
-st.markdown("*Laboratorial © 2025 · Predictive Labor Market Analytics*")
