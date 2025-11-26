@@ -136,7 +136,9 @@ else:
                         'UR': st.session_state.ur_forecasts['Total'],
                         'UER': st.session_state.uer_forecasts['Total']
                     }[cat]
-                    st.metric(label=f"{category_names[cat]} Total", value=f"{total_value:.2f}%")
+                    previous = models[f'{cat}_Total'].data.endog[-1]
+                    delta = total_value - previous
+                    st.metric(label=f"{category_names[cat]} Total as of {selected_month_name} {selected_year}", value=f"{total_value:.2f}%", delta=f"{delta:+.2f}%")
 
         # Combined forecast chart
         st.subheader("Combined Forecast Overview")
