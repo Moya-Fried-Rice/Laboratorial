@@ -14,6 +14,16 @@ if 'forecasts_generated' not in st.session_state:
     st.session_state.forecasts_generated = False
 if 'prev_filters' not in st.session_state:
     st.session_state.prev_filters = None
+if 'lfpr_forecasts' not in st.session_state:
+    st.session_state.lfpr_forecasts = {}
+if 'er_forecasts' not in st.session_state:
+    st.session_state.er_forecasts = {}
+if 'ur_forecasts' not in st.session_state:
+    st.session_state.ur_forecasts = {}
+if 'uer_forecasts' not in st.session_state:
+    st.session_state.uer_forecasts = {}
+if 'forecast_series' not in st.session_state:
+    st.session_state.forecast_series = {}
 
 # -----------------------------
 # Load models
@@ -72,6 +82,11 @@ selected_start_date = pd.Timestamp(year=selected_start_year, month=selected_star
 current_filters = (tuple(selected_categories), tuple(selected_genders), selected_year, selected_month, selected_start_year, selected_start_month)
 if st.session_state.prev_filters != current_filters:
     st.session_state.forecasts_generated = False
+    st.session_state.lfpr_forecasts = {}
+    st.session_state.er_forecasts = {}
+    st.session_state.ur_forecasts = {}
+    st.session_state.uer_forecasts = {}
+    st.session_state.forecast_series = {}
     st.session_state.prev_filters = current_filters
 
 # -----------------------------
@@ -90,19 +105,24 @@ steps = (target_date.year - last_date.year) * 12 + (target_date.month - last_dat
 if steps <= 0:
     st.error("Please select a date after the last historical date.")
 else:
-    if st.sidebar.button("Generate Forecasts"):
-        st.session_state.forecasts_generated = True
+    if st.sidebar.button("Generate Forecasts") or st.session_state.forecasts_generated:
+        if not st.session_state.forecasts_generated:
+            st.session_state.forecasts_generated = True
 
-        # Forecasts
-        lfpr_forecasts = {}
-        er_forecasts = {}
-        ur_forecasts = {}
-        uer_forecasts = {}
-        for gender in selected_genders:
-            lfpr_forecasts[gender] = models[f'LFPR_{gender}'].forecast(steps=steps).iloc[-1]
-            er_forecasts[gender] = models[f'ER_{gender}'].forecast(steps=steps).iloc[-1]
-            ur_forecasts[gender] = models[f'UR_{gender}'].forecast(steps=steps).iloc[-1]
-            uer_forecasts[gender] = models[f'UER_{gender}'].forecast(steps=steps).iloc[-1]
+            # Forecasts
+            for gender in selected_genders:
+                lfpr_forecast = models[f'LFPR_{gender}'].forecast(steps=steps)
+                st.session_state.lfpr_forecasts[gender] = lfpr_forecast.iloc[-1]
+                st.session_state.forecast_series[f'LFPR_{gender}'] = lfpr_forecast
+                er_forecast = models[f'ER_{gender}'].forecast(steps=steps)
+                st.session_state.er_forecasts[gender] = er_forecast.iloc[-1]
+                st.session_state.forecast_series[f'ER_{gender}'] = er_forecast
+                ur_forecast = models[f'UR_{gender}'].forecast(steps=steps)
+                st.session_state.ur_forecasts[gender] = ur_forecast.iloc[-1]
+                st.session_state.forecast_series[f'UR_{gender}'] = ur_forecast
+                uer_forecast = models[f'UER_{gender}'].forecast(steps=steps)
+                st.session_state.uer_forecasts[gender] = uer_forecast.iloc[-1]
+                st.session_state.forecast_series[f'UER_{gender}'] = uer_forecast
 
         # Display cards
         if 'Total' in selected_genders:
@@ -111,10 +131,10 @@ else:
             for idx, cat in enumerate(selected_categories):
                 with cols[idx]:
                     total_value = {
-                        'LFPR': lfpr_forecasts['Total'],
-                        'ER': er_forecasts['Total'],
-                        'UR': ur_forecasts['Total'],
-                        'UER': uer_forecasts['Total']
+                        'LFPR': st.session_state.lfpr_forecasts['Total'],
+                        'ER': st.session_state.er_forecasts['Total'],
+                        'UR': st.session_state.ur_forecasts['Total'],
+                        'UER': st.session_state.uer_forecasts['Total']
                     }[cat]
                     st.metric(label=f"{category_names[cat]} Total", value=f"{total_value:.2f}%")
 
@@ -128,7 +148,7 @@ else:
                 model = models[model_name]
                 historical = pd.Series(model.data.endog, index=model.data.dates)
                 historical = historical[historical.index >= selected_start_date]
-                forecast = model.forecast(steps=steps)
+                forecast = st.session_state.forecast_series[model_name]
                 color = color_list[categories.index(cat) * 3 + genders.index(gender)]
                 # Historical
                 fig_combined.add_trace(go.Scatter(
@@ -191,7 +211,7 @@ else:
                     model = models[model_name]
                     historical = pd.Series(model.data.endog, index=model.data.dates)
                     historical = historical[historical.index >= selected_start_date]
-                    forecast = model.forecast(steps=steps)
+                    forecast = st.session_state.forecast_series[model_name]
                     color = color_list[categories.index(cat) * 3 + genders.index(gender)]
                     # Historical
                     fig.add_trace(go.Scatter(
