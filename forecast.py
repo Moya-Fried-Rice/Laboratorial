@@ -135,7 +135,7 @@ else:
                     x=historical.index, y=historical.values,
                     mode='lines',
                     name=f'{category_names[cat]} {gender} Historical',
-                    line=dict(color=color),
+                    line=dict(color=color, opacity=0.6),
                     hovertemplate='%{x}<br>%{y:.2f}<extra></extra>',
                     legendgroup=f'{cat}_{gender}'
                 ))
@@ -144,7 +144,7 @@ else:
                     x=forecast.index, y=forecast.values,
                     mode='lines',
                     name=f'{category_names[cat]} {gender} Forecast',
-                    line=dict(color=color, dash='dash'),
+                    line=dict(color=color),
                     hovertemplate='%{x}<br>%{y:.2f}<extra></extra>',
                     legendgroup=f'{cat}_{gender}'
                 ))
@@ -197,7 +197,7 @@ else:
                         x=historical.index, y=historical.values,
                         mode='lines',
                         name=f'{gender} Historical',
-                        line=dict(color=color),
+                        line=dict(color=color, opacity=0.6),
                         hovertemplate='%{x}<br>%{y:.2f}<extra></extra>'
                     ))
                     # Forecast
@@ -205,7 +205,7 @@ else:
                         x=forecast.index, y=forecast.values,
                         mode='lines',
                         name=f'{gender} Forecast',
-                        line=dict(color=color, dash='dash'),
+                        line=dict(color=color),
                         hovertemplate='%{x}<br>%{y:.2f}<extra></extra>'
                     ))
                     # Target marker
