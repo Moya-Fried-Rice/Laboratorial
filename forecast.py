@@ -135,7 +135,8 @@ else:
                     x=historical.index, y=historical.values,
                     mode='lines',
                     name=f'{category_names[cat]} {gender} Historical',
-                    line=dict(color=color, opacity=0.6),
+                    line=dict(color=color),
+                    opacity=0.6,
                     hovertemplate='%{x}<br>%{y:.2f}<extra></extra>',
                     legendgroup=f'{cat}_{gender}'
                 ))
@@ -197,7 +198,8 @@ else:
                         x=historical.index, y=historical.values,
                         mode='lines',
                         name=f'{gender} Historical',
-                        line=dict(color=color, opacity=0.6),
+                        line=dict(color=color),
+                        opacity=0.6,
                         hovertemplate='%{x}<br>%{y:.2f}<extra></extra>'
                     ))
                     # Forecast
