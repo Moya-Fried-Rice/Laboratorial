@@ -350,7 +350,7 @@ else:
         padding: 20px;
         border-radius: 12px;
         margin-bottom: 25px;
-        height: 260px;
+        height: 270px;
         box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
         display: flex;
         flex-direction: column;
