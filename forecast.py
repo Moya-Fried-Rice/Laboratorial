@@ -283,6 +283,15 @@ selected_categories = st.sidebar.multiselect(
 )
 selected_genders = st.sidebar.multiselect("Genders", genders, default=genders, key="genders")
 
+st.sidebar.markdown('<span class="sidebar-section-title">Historical Data Range</span>', unsafe_allow_html=True)
+min_date = pd.Timestamp(models['ER_Total'].data.dates[0])
+last_date = pd.Timestamp(models['ER_Total'].data.dates[-1])
+start_years = list(range(min_date.year, last_date.year + 1))
+selected_start_year = st.sidebar.slider("Start Year", min_value=min(start_years), max_value=max(start_years),
+                                        value=start_years[0], key="start_year")
+selected_start_month = st.sidebar.slider("Start Month", 1, 12, 1, key="start_month")
+selected_start_date = pd.Timestamp(year=selected_start_year, month=selected_start_month, day=1)
+
 st.sidebar.markdown('<span class="sidebar-section-title">Target Date</span>', unsafe_allow_html=True)
 current_year = pd.Timestamp.now().year
 years = list(range(current_year, current_year + 10))
@@ -294,14 +303,6 @@ selected_month = st.sidebar.slider("Month", 1, 12, 7, key="target_month")
 selected_month_name = month_names[selected_month - 1]
 target_date = pd.Timestamp(year=selected_year, month=selected_month, day=1)
 
-st.sidebar.markdown('<span class="sidebar-section-title">Historical Data Range</span>', unsafe_allow_html=True)
-min_date = pd.Timestamp(models['ER_Total'].data.dates[0])
-last_date = pd.Timestamp(models['ER_Total'].data.dates[-1])
-start_years = list(range(min_date.year, last_date.year + 1))
-selected_start_year = st.sidebar.slider("Start Year", min_value=min(start_years), max_value=max(start_years),
-                                        value=start_years[0], key="start_year")
-selected_start_month = st.sidebar.slider("Start Month", 1, 12, 1, key="start_month")
-selected_start_date = pd.Timestamp(year=selected_start_year, month=selected_start_month, day=1)
 
 # Initialize session state variables if not already present
 if 'forecasts_generated' not in st.session_state:
@@ -340,6 +341,76 @@ steps = (target_date.year - last_date.year) * 12 + (target_date.month - last_dat
 if steps <= 0:
     st.error("Please select a date after the last historical date.")
 else:
+    # Create 4 columns
+    ins_col1, ins_col2, ins_col3, ins_col4 = st.columns(4)
+
+    card_style = """
+        background: #e8f4fb;
+        border-left: 5px solid #0F72BA;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        height: 260px;
+        box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    """
+
+    list_style = "margin: 8px 0 0 18px; line-height: 1.6; color: #0a3d62; font-size: 14px;"
+
+    # Column 1
+    with ins_col1:
+        st.markdown(f"""
+        <div style="{card_style}">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">1. Selecting Historical Data Range</p>
+            <ul style="{list_style}">
+                <li>Choose the start and end dates of the historical data you want the model to analyze.</li>
+                <li>A wider range gives the model more patterns to learn from, which can improve accuracy.</li>
+                <li>Gaps or short ranges may result in more unstable predictions.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Column 2
+    with ins_col2:
+        st.markdown(f"""
+        <div style="{card_style}">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">2. Selecting a Target Forecast Date</p>
+            <ul style="{list_style}">
+                <li>Choose a month and year beyond your selected historical end date.</li>
+                <li>The farther the target date, the higher the uncertainty of the prediction.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Column 3
+    with ins_col3:
+        st.markdown(f"""
+        <div style="{card_style}">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">3. Interpreting the Results</p>
+            <ul style="{list_style}">
+                <li><b>Solid lines</b> represent the actual historical values based on your selected range.</li>
+                <li><b>Dashed lines</b> represent the model’s predicted values after the historical period.</li>
+                <li>The <b>target point</b> highlights the exact forecasted value for the month/year you selected.</li>
+                <li>If a shaded confidence band appears, a wider band means more uncertainty.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Column 4
+    with ins_col4:
+        st.markdown(f"""
+        <div style="{card_style}">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">4. Important Notes</p>
+            <ul style="{list_style}">
+                <li>Forecasts rely only on patterns found within your chosen historical data range.</li>
+                <li>Sudden changes in trends may affect prediction behavior.</li>
+                <li>These forecasts serve as helpful guidance—not guaranteed future outcomes.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
     col1, col2, col3 = st.columns([1, 1, 2])
     with col1:
         if st.button("Generate Forecasts", use_container_width=True):
