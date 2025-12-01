@@ -138,6 +138,7 @@ st.markdown("""
         padding: 24px;
         transition: all 0.3s ease;
         height: 100%;
+        margin-bottom: 25px;
     }
 
     .model-container:hover {

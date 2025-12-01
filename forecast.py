@@ -9,237 +9,251 @@ st.set_page_config(layout="wide")
 
 st.markdown("""
 <style>
-    /* Metric Cards */
-    [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
-        padding: 24px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.15);
-        box-shadow: 0 4px 16px rgba(15, 114, 186, 0.15);
-        transition: all 0.3s ease;
-    }
-    [data-testid="stMetric"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(15, 114, 186, 0.25);
-        border-color: rgba(0, 212, 255, 0.3);
-    }
-    [data-testid="stMetricLabel"] {
-        color: rgba(255,255,255,0.85) !important;
-        font-size: 13px !important;
-        font-weight: 500 !important;
-        letter-spacing: 0.3px !important;
-    }
-    [data-testid="stMetricValue"] {
-        color: #00d4ff !important;
-        font-size: 32px !important;
-        font-weight: 700 !important;
-    }
-    [data-testid="stMetricDelta"] {
-        color: #00d4ff !important;
-        font-size: 13px !important;
-    }
+/* Metric Cards */
+[data-testid="stMetric"] {
+    background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 4px 16px rgba(15, 114, 186, 0.15);
+    transition: all 0.3s ease;
+}
+[data-testid="stMetric"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(15, 114, 186, 0.25);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+[data-testid="stMetricLabel"] {
+    color: rgba(255,255,255,0.85) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+}
+[data-testid="stMetricValue"] {
+    color: #00d4ff !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+}
+[data-testid="stMetricDelta"] {
+    color: #00d4ff !important;
+    font-size: 13px !important;
+}
 
-    /* Sidebar Sections */
-    .sidebar-header {
-        background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
-        padding: 24px;
-        border-radius: 12px;
-        margin-bottom: 28px;
-        border-bottom: 3px solid #00d4ff;
-        box-shadow: 0 4px 12px rgba(15, 114, 186, 0.15);
-    }
-    .sidebar-header h2 {
-        color: white;
-        margin: 0;
-        font-size: 22px;
-        font-weight: 700;
-    }
-    .sidebar-header p {
-        color: rgba(255,255,255,0.7);
-        margin: 8px 0 0 0;
-        font-size: 13px;
-        font-weight: 400;
-    }
+/* Sidebar */
+.sidebar-header {
+    background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    border-bottom: 3px solid #00d4ff;
+    box-shadow: 0 4px 12px rgba(15, 114, 186, 0.15);
+}
+.sidebar-header h2 {
+    color: white;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+.sidebar-header p {
+    color: rgba(255,255,255,0.7);
+    margin: 8px 0 0 0;
+    font-size: 13px;
+}
+.sidebar-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0F72BA;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    display: block;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 8px 0;
+}
 
-    .sidebar-section-title {
-        font-size: 12px;
-        font-weight: 700;
-        color: #0F72BA;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 14px;
-        display: block;
-        padding: 8px 0;
-        border-bottom: 2px solid #e5e7eb;
-    }
+/* Select & Multiselect */
+[data-testid="stMultiSelect"] div[data-baseweb="select"],
+.stSelectbox [data-baseweb="select"] {
+    border-color: #0F72BA !important;
+}
+[data-testid="stMultiSelect"] div[data-baseweb="select"]:focus-within,
+.stSelectbox [data-baseweb="select"]:focus-within {
+    box-shadow: 0 0 0 3px rgba(15, 114, 186, 0.1) !important;
+}
+[data-testid="stMultiSelect"] div[role="button"] {
+    background-color: #0F72BA !important;
+    border-color: #0F72BA !important;
+}
+[data-baseweb="tag"] {
+    background-color: #0F72BA !important;
+}
+[data-baseweb="tag"] span {
+    color: white !important;
+}
 
-    /* Slider styling */
-    [data-testid="stSlider"] div[role="slider"] {
-        background-color: #0F72BA !important;
-    }
+/* Slider */
+[data-testid="stSlider"] div[role="slider"],
+div.stSlider > div > div > div {
+    background-color: #0F72BA !important;
+}
 
-    [data-testid="stSlider"] div[role="slider"]::after {
-        background-color: #0F72BA !important;
-    }
+/* Section Headers */
+.section-header {
+    background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin: 32px 0 20px 0;
+    border-left: 5px solid #00d4ff;
+    box-shadow: 0 4px 12px rgba(15, 114, 186, 0.12);
+}
+.section-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+.section-header span {
+    color: #00d4ff;
+    font-weight: 700;
+}
 
-    /* Multiselect styling */
-    [data-testid="stMultiSelect"] div[data-baseweb="select"] {
-        border-color: #0F72BA !important;
-    }
+/* Chart Containers */
+.chart-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
+    padding: 0;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+.chart-container-title {
+    background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
+    color: white;
+    padding: 18px 24px;
+    font-weight: 700;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    letter-spacing: 0.2px;
+}
+.chart-content {
+    padding: 24px;
+}
 
-    [data-testid="stMultiSelect"] div[data-baseweb="select"]:focus-within {
-        border-color: #0F72BA !important;
-        box-shadow: 0 0 0 3px rgba(15, 114, 186, 0.1) !important;
-    }
+/* Data Table */
+.data-table-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    padding: 15px 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin: 16px 0 12px 0;
+}
+.data-table-header p {
+    margin: 0;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 13px;
+}
 
-    [data-testid="stMultiSelect"] div[role="button"] {
-        background-color: #0F72BA !important;
-        border-color: #0F72BA !important;
-    }
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
+    border-radius: 12px;
+    margin-top: 40px;
+    border: 1px dashed #d1d5db;
+}
+.empty-state-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+.empty-state h3 {
+    color: #0F72BA;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+.empty-state p {
+    color: #6b7280;
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.5;
+}
 
-    /* Slider track color */
-    div.stSlider > div > div > div {
-        background-color: #0F72BA !important;
-    }
+/* Buttons */
+.stButton > button {
+    background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%) !important;
+    color: white !important;
+    border: 1px solid rgba(0, 212, 255, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(15, 114, 186, 0.2) !important;
+}
+.stButton > button:hover {
+    background: linear-gradient(135deg, #0a5089 0%, #073d5c 100%) !important;
+    border-color: #00d4ff !important;
+    box-shadow: 0 6px 16px rgba(15, 114, 186, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
 
-    /* Multi-select tag/chip background */
-    [data-baseweb="tag"] {
-        background-color: #0F72BA !important;
-    }
+/* Divider */
+.divider {
+    margin: 40px 0;
+    border-top: 2px solid #e5e7eb;
+}
 
-    [data-baseweb="tag"] span {
-        color: white !important;
-    }
+/* Forecast Instruction Cards */
+.ins-card {
+    background: #e8f4fb;
+    border-left: 5px solid #0F72BA;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    flex: 1 1 calc(25% - 16px);
+    box-sizing: border-box;
+}
+.ins-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 8px 16px rgba(0,0,0,0.15);
+}
+.ins-card p {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0F72BA;
+}
+.ins-card ul {
+    margin: 8px 0 0 18px;
+    line-height: 1.6;
+    color: #0a3d62;
+    font-size: 14px;
+}
+.ins-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
 
-    /* Slider thumb/handle */
-    div[role="slider"] {
-        background: #0F72BA !important;
-    }
+/* Medium screens: 2 per row */
+@media screen and (max-width: 1200px) {
+    .ins-card { flex: 1 1 calc(50% - 16px) !important; }
+}
 
-    /* Category and Gender select boxes accent */
-    .stSelectbox [data-baseweb="select"] {
-        border-color: #0F72BA !important;
-    }
+/* Small screens: 1 per row */
+@media screen and (max-width: 768px) {
+    .ins-card { flex: 1 1 100% !important; }
 
-    .stSelectbox [data-baseweb="select"]:hover {
-        border-color: #0a5089 !important;
-    }
-
-    .stSelectbox [data-baseweb="select"]:focus-within {
-        border-color: #0F72BA !important;
-        box-shadow: 0 0 0 3px rgba(15, 114, 186, 0.1) !important;
-    }
-
-    /* Section Headers */
-    .section-header {
-        background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
-        padding: 20px 24px;
-        border-radius: 10px;
-        margin: 32px 0 20px 0;
-        border-left: 5px solid #00d4ff;
-        box-shadow: 0 4px 12px rgba(15, 114, 186, 0.12);
-    }
-    .section-header h3 {
-        color: white;
-        margin: 0;
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0.2px;
-    }
-    .section-header span {
-        color: #00d4ff;
-        font-weight: 700;
-    }
-
-    /* Chart Containers */
-    .chart-container {
-        background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
-        padding: 0;
-        border-radius: 12px;
-        margin-bottom: 28px;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-    }
-    .chart-container-title {
-        background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%);
-        color: white;
-        padding: 18px 24px;
-        font-weight: 700;
-        font-size: 16px;
-        border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-        letter-spacing: 0.2px;
-    }
-    .chart-content {
-        padding: 24px;
-    }
-
-    /* Data Table */
-    .data-table-header {
-        background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-        padding: 15px 16px;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        margin-top: 16px;
-        margin-bottom: 12px;
-    }
-    .data-table-header p {
-        margin: 0;
-        color: #1f2937;
-        font-weight: 600;
-        font-size: 13px;
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 80px 40px;
-        background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
-        border-radius: 12px;
-        margin-top: 40px;
-        border: 1px dashed #d1d5db;
-    }
-    .empty-state-icon {
-        font-size: 64px;
-        margin-bottom: 20px;
-    }
-    .empty-state h3 {
-        color: #0F72BA;
-        margin: 0 0 10px 0;
-        font-size: 20px;
-        font-weight: 700;
-    }
-    .empty-state p {
-        color: #6b7280;
-        font-size: 15px;
-        margin: 0;
-        line-height: 1.5;
-    }
-
-    /* Button Styling */
-    .stButton > button {
-        background: linear-gradient(135deg, #0F72BA 0%, #0a5089 100%) !important;
-        color: white !important;
-        border: 1px solid rgba(0, 212, 255, 0.2) !important;
-        border-radius: 8px !important;
-        padding: 12px 24px !important;
-        font-weight: 600 !important;
-        font-size: 14px !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 12px rgba(15, 114, 186, 0.2) !important;
-    }
-    .stButton > button:hover {
-        background: linear-gradient(135deg, #0a5089 0%, #073d5c 100%) !important;
-        border-color: #00d4ff !important;
-        box-shadow: 0 6px 16px rgba(15, 114, 186, 0.3) !important;
-        transform: translateY(-1px) !important;
-    }
-
-    /* Divider */
-    .divider {
-        margin: 40px 0;
-        border-top: 2px solid #e5e7eb;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -341,73 +355,42 @@ steps = (target_date.year - last_date.year) * 12 + (target_date.month - last_dat
 if steps <= 0:
     st.error("Please select a date after the last historical date.")
 else:
-    # Create 4 columns
-    ins_col1, ins_col2, ins_col3, ins_col4 = st.columns(4)
-
-    card_style = """
-        background: #e8f4fb;
-        border-left: 5px solid #0F72BA;
-        padding: 20px;
-        border-radius: 12px;
-        margin-bottom: 25px;
-        height: 270px;
-        box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    """
-
     list_style = "margin: 8px 0 0 18px; line-height: 1.6; color: #0a3d62; font-size: 14px;"
 
-    # Column 1
-    with ins_col1:
-        st.markdown(f"""
-        <div style="{card_style}">
-            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">1. Selecting Historical Data Range</p>
-            <ul style="{list_style}">
-                <li>Choose the start and end dates of the historical data you want the model to analyze.</li>
-                <li>A wider range gives the model more patterns to learn from, which can improve accuracy.</li>
-                <li>Gaps or short ranges may result in more unstable predictions.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Column 2
-    with ins_col2:
-        st.markdown(f"""
-        <div style="{card_style}">
-            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">2. Selecting a Target Forecast Date</p>
-            <ul style="{list_style}">
-                <li>Choose a month and year beyond your selected historical end date.</li>
-                <li>The farther the target date, the higher the uncertainty of the prediction.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Column 3
-    with ins_col3:
-        st.markdown(f"""
-        <div style="{card_style}">
-            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">3. Interpreting the Results</p>
-            <ul style="{list_style}">
-                <li><b>Solid lines</b> represent the actual historical values based on your selected range.</li>
-                <li><b>Dashed lines</b> represent the model’s predicted values after the historical period.</li>
-                <li>The <b>target point</b> highlights the exact forecasted value for the month/year you selected.</li>
-                <li>If a shaded confidence band appears, a wider band means more uncertainty.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Column 4
-    with ins_col4:
-        st.markdown(f"""
-        <div style="{card_style}">
-            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #0F72BA;">4. Important Notes</p>
-            <ul style="{list_style}">
-                <li>Forecasts rely only on patterns found within your chosen historical data range.</li>
-                <li>Sudden changes in trends may affect prediction behavior.</li>
-                <li>These forecasts serve as helpful guidance—not guaranteed future outcomes.</li>
-            </ul>
+    st.markdown("""
+        <div class="ins-cards-container">
+            <div class="ins-card">
+                <p>1. Selecting Historical Data Range</p>
+                <ul>
+                    <li>Choose the start and end dates of the historical data you want the model to analyze.</li>
+                    <li>A wider range gives the model more patterns to learn from, which can improve accuracy.</li>
+                    <li>Gaps or short ranges may result in more unstable predictions.</li>
+                </ul>
+            </div>
+            <div class="ins-card">
+                <p>2. Selecting a Target Forecast Date</p>
+                <ul>
+                    <li>Choose a month and year beyond your selected historical end date.</li>
+                    <li>The farther the target date, the higher the uncertainty of the prediction.</li>
+                </ul>
+            </div>
+            <div class="ins-card">
+                <p>3. Interpreting the Results</p>
+                <ul>
+                    <li><b>Solid lines</b> represent the actual historical values based on your selected range.</li>
+                    <li><b>Dashed lines</b> represent the model’s predicted values after the historical period.</li>
+                    <li>The <b>target point</b> highlights the exact forecasted value for the month/year you selected.</li>
+                    <li>If a shaded confidence band appears, a wider band means more uncertainty.</li>
+                </ul>
+            </div>
+            <div class="ins-card">
+                <p>4. Important Notes</p>
+                <ul>
+                    <li>Forecasts rely only on patterns found within your chosen historical data range.</li>
+                    <li>Sudden changes in trends may affect prediction behavior.</li>
+                    <li>These forecasts serve as helpful guidance—not guaranteed future outcomes.</li>
+                </ul>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
