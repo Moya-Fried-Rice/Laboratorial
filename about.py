@@ -129,57 +129,26 @@ st.markdown("""
         color: var(--accent);
         font-weight: 600;
     }
-
-    /* New Model Container and Variant Badge Styling */
-    .model-container {
-        background: linear-gradient(135deg, var(--surface-light) 0%, rgba(15, 114, 186, 0.08) 100%);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 24px;
-        transition: all 0.3s ease;
-        height: 100%;
-        margin-bottom: 25px;
+    
+    .model-item {
+        color: var(--text-secondary);
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 1rem;
     }
-
-    .model-container:hover {
-        border-color: var(--accent);
-        background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(15, 114, 186, 0.12) 100%);
-        box-shadow: 0 12px 32px rgba(0, 217, 255, 0.15);
-        transform: translateY(-4px);
+    
+    .model-item span {
+        color: var(--accent); /* Bullet color */
+        font-weight: 900;
+        margin-right: 6px;
     }
-
-    .model-title {
-        font-size: 1.15rem;
-        font-weight: 700;
+    
+    .model-bullet {
         color: var(--accent);
-        margin: 0 0 16px 0;
-        letter-spacing: 0.3px;
+        font-weight: 900;
+        margin-right: 6px;
     }
-
-    .variants-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .variant-badge {
-        display: inline-block;
-        background-color: var(--primary);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        border: 1px solid var(--primary-dark);
-        transition: all 0.2s ease;
-    }
-
-    .variant-badge:hover {
-        background-color: var(--accent);
-        color: var(--surface);
-        border-color: var(--accent);
-        transform: scale(1.05);
-    }
+    
 </style>
 """, unsafe_allow_html=True)
 
@@ -240,31 +209,25 @@ Our forecasting engine leverages <span class="highlight">SARIMAX (Seasonal AutoR
 # Models Available Section
 st.markdown("""
 <h2 class="section-header">Labor Market Indicators</h2>
-<p class="content-text" style="margin-bottom: 32px;">
-Our platform provides four core labor market indicators, each with demographic breakdowns for comprehensive analysis.
+<p class="content-text">
+Our platform supports four core labor market indicators, available for 
+<span class="highlight"> Total, Male, and Female </span> demographic segments.
 </p>
 """, unsafe_allow_html=True)
 
-models_data = {
-    "Employment Rate (ER)": ["Total", "Male", "Female"],
-    "Labor Force Participation (LFPR)": ["Total", "Male", "Female"],
-    "Underemployment Rate (UER)": ["Total", "Male", "Female"],
-    "Unemployment Rate (UR)": ["Total", "Male", "Female"],
-}
+# Bulleted list of indicators
+models_data = [
+    "Employment Rate (ER)",
+    "Labor Force Participation (LFPR)",
+    "Underemployment Rate (UER)",
+    "Unemployment Rate (UR)"
+]
 
-col1, col2 = st.columns(2, gap="large")
-columns = [col1, col2]
-
-for idx, (model_name, variants) in enumerate(models_data.items()):
-    with columns[idx % 2]:
-        st.markdown(f"""
-        <div class="model-container">
-            <p class="model-title">{model_name}</p>
-            <div class="variants-container">
-                {''.join([f'<span class="variant-badge">{variant}</span>' for variant in variants])}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+for model_name in models_data:
+    st.markdown(
+        f'<div class="model-item"><span class="model-bullet">•</span>{model_name}</div>',
+        unsafe_allow_html=True
+    )
 
 # Getting Started Section
 st.markdown("""
